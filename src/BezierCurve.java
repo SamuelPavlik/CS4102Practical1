@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BezierCurve {
+    private static final double TANGENT_SIZE = 20;
+
     private List<Vector> points;
 
     public BezierCurve() {
@@ -46,7 +48,7 @@ public class BezierCurve {
             resultPoint.add(pointDiff.scMult(toMultSc));
         }
 
-        return resultPoint.scMult(n);
+        return resultPoint.scMult(n).ofSize(TANGENT_SIZE);
     }
 
     public List<Vector> getPoints() {
