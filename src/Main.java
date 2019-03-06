@@ -76,9 +76,15 @@ public class Main extends Frame implements MouseListener, MouseMotionListener {
 //                }
             }
 
-            List<Vector> uniformPoints = bezierCurve.getUniformPoints(5);
-            for (Vector point : uniformPoints) {
-                g2.draw(new Ellipse2D.Double(point.x, point.y, 10, 10));
+            List<Double> uniformPoints = bezierCurve.getUniformParams(10);
+            for (double param : uniformPoints) {
+                Vector current = bezierCurve.getPoint(param);
+                tanVector = bezierCurve.getTangent(param);
+                tangentLine.moveTo(current.x - tanVector.x, current.y - tanVector.y);
+                tangentLine.lineTo(current.x + tanVector.x, current.y + tanVector.y);
+                drawArrowHead(tanVector, tangentLine);
+                g2.draw(tangentLine);
+                g2.draw(new Ellipse2D.Double(current.x, current.y, 10, 10));
             }
 
             g2.draw(tangentLine);

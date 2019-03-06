@@ -52,19 +52,25 @@ public class BezierCurve {
         return resultPoint.scMult(n).ofSize(TANGENT_SIZE);
     }
 
-    public List<Vector> getUniformPoints(int num) {
+    public List<Double> getUniformParams(int num) {
+        List<Double> uniformParams = new ArrayList<>();
+        if (points.size() <= 1 || num <= 0)
+            return uniformParams;
+
+        double fly = points.get(0).copy().sub(points.get(points.size() - 1)).size();
+
         double totalLength = 0;
         Vector oldPoint = getPoint(0);
         Vector newPoint;
         HashMap<Double, Double> initLengthToParamMap = new HashMap<>();
         initLengthToParamMap.put(0.0, 0.0);
-        double[] lengths = new double[(int)(1.0 / STEP_SIZE)];
+        double[] lengths = new double[(int)(1.0 / STEP_SIZE) + 1];
         lengths[0] = 0;
-        int index = 0;
+        int index = 1;
 
         for (double param = STEP_SIZE; param <= 1; param = Main.round(param + STEP_SIZE, 3)) {
             newPoint = getPoint(param);
-            double length = newPoint.sub(oldPoint).size();
+            double length = newPoint.copy().sub(oldPoint).size();
             totalLength += length;
             initLengthToParamMap.put(totalLength, param);
             lengths[index++] = totalLength;
@@ -72,15 +78,14 @@ public class BezierCurve {
             oldPoint = newPoint;
         }
 
-        List<Vector> uniformPoints = new ArrayList<>();
         double unit = totalLength / num;
         for (int i = 0; i < num; i++) {
             double pointLength = i * unit;
             double pointParam = initLengthToParamMap.get(lengths[findClosestLargerIndex(pointLength, lengths)]);
-            uniformPoints.add(getPoint(pointParam));
+            uniformParams.add(pointParam);
         }
 
-        return uniformPoints;
+        return uniformParams;
     }
 
     private int findClosestLargerIndex(double desiredLength, double[] lengths) {
