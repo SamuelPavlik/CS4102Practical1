@@ -1,4 +1,5 @@
 //from www.j a va2s .  c  o m
+import java.util.List;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -35,7 +36,7 @@ public class Main extends Frame implements MouseListener, MouseMotionListener {
 
     public Main() {
         this.bezierCurve = new BezierCurve();
-        setSize(500, 450);
+        setSize(1000, 1000);
 //        add(new Checkbox())
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -65,14 +66,19 @@ public class Main extends Frame implements MouseListener, MouseMotionListener {
                 Vector current = bezierCurve.getPoint(param);
                 polyline.lineTo(current.x, current.y);
 
-                if (((int) (param * 100)) % 10 == 0) {
-//                    tanVector = bezierCurve.getTangent(param);
-//                    tangentLine.moveTo(current.x - tanVector.x, current.y - tanVector.y);
-//                    tangentLine.lineTo(current.x + tanVector.x, current.y + tanVector.y);
-//                    drawArrowHead(tanVector, tangentLine);
-//                    g2.draw(tangentLine);
-                    g2.draw(new Ellipse2D.Double(current.x, current.y, 10, 10));
-                }
+//                if (((int) (param * 100)) % 10 == 0) {
+////                    tanVector = bezierCurve.getTangent(param);
+////                    tangentLine.moveTo(current.x - tanVector.x, current.y - tanVector.y);
+////                    tangentLine.lineTo(current.x + tanVector.x, current.y + tanVector.y);
+////                    drawArrowHead(tanVector, tangentLine);
+////                    g2.draw(tangentLine);
+//                    g2.draw(new Ellipse2D.Double(current.x, current.y, 10, 10));
+//                }
+            }
+
+            List<Vector> uniformPoints = bezierCurve.getUniformPoints(5);
+            for (Vector point : uniformPoints) {
+                g2.draw(new Ellipse2D.Double(point.x, point.y, 10, 10));
             }
 
             g2.draw(tangentLine);
@@ -139,7 +145,7 @@ public class Main extends Frame implements MouseListener, MouseMotionListener {
     public void mouseMoved(MouseEvent e) {
     }
 
-    private static double round (double value, int precision) {
+    public static double round (double value, int precision) {
         int scale = (int) Math.pow(10, precision);
         return (double) Math.round(value * scale) / scale;
     }

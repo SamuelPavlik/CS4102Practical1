@@ -1,8 +1,9 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BezierCurve {
     private static final double TANGENT_SIZE = 20;
+    private static final double STEP_SIZE = 0.001;
+    private static final double EPSILON = STEP_SIZE;
 
     private List<Vector> points;
 
@@ -50,6 +51,74 @@ public class BezierCurve {
 
         return resultPoint.scMult(n).ofSize(TANGENT_SIZE);
     }
+
+    public List<Vector> getUniformPoints(int num) {
+        double totalLength = 0;
+        Vector oldPoint = getPoint(0);
+        Vector newPoint;
+        HashMap<Double, Double> initLengthToParamMap = new HashMap<>();
+        initLengthToParamMap.put(0.0, 0.0);
+        double[] lengths = new double[(int)(1.0 / STEP_SIZE)];
+        lengths[0] = 0;
+        int index = 0;
+
+        for (double param = STEP_SIZE; param <= 1; param = Main.round(param + STEP_SIZE, 3)) {
+            newPoint = getPoint(param);
+            double length = newPoint.sub(oldPoint).size();
+            totalLength += length;
+            initLengthToParamMap.put(totalLength, param);
+            lengths[index++] = totalLength;
+
+            oldPoint = newPoint;
+        }
+
+        List<Vector> uniformPoints = new ArrayList<>();
+        double unit = totalLength / num;
+        for (int i = 0; i < num; i++) {
+            double pointLength = i * unit;
+            double pointParam = initLengthToParamMap.get(lengths[findClosestLargerIndex(pointLength, lengths)]);
+            uniformPoints.add(getPoint(pointParam));
+        }
+
+        return uniformPoints;
+    }
+
+    private int findClosestLargerIndex(double desiredLength, double[] lengths) {
+        for (int i = 0; i < lengths.length; i++) {
+            if (lengths[i] >= desiredLength) {
+                return i;
+            }
+        }
+
+        return lengths.length - 1;
+    }
+
+//    private double findParam(double desiredLength, double[] lengths, TreeMap<Double, Double> initParamToLengthMap) {
+//        //1. get lower index
+//        //2. look if either is within epsilon
+//        //1. if not, get centre between these params and check if that is within epsilon
+//        //4. if not, get half in which the length is and repeat from 3.
+//        int higherIndex = findClosestLargerIndex(desiredLength, lengths);
+//        int lowerIndex = higherIndex - 1;
+//
+//        if (lengths[higherIndex] - desiredLength <= EPSILON) {
+//            return initParamToLengthMap.get(lengths[higherIndex]);
+//        }
+//        else if (desiredLength - lengths[lowerIndex] <= EPSILON) {
+//            return initParamToLengthMap.get(lengths[lowerIndex]);
+//        }
+//        else {
+//            double lowerLength = initParamToLengthMap.get(lengths[lowerIndex]);
+//            double middle = (initParamToLengthMap.get(lengths[higherIndex]) - lowerLength) / 2.0;
+//
+//            while (Math.abs(lowerLength + getPoint(middle).sub(getPoint(lowerLength)).size() - desiredLength) > EPSILON) {
+//
+//                lowerLength = initParamToLengthMap.get(lengths[lowerIndex]);
+//                middle = (initParamToLengthMap.get(lengths[higherIndex]) - lowerLength) / 2.0;
+//            }
+//        }
+//
+//    }
 
     public List<Vector> getPoints() {
         return points;
