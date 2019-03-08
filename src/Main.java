@@ -58,7 +58,7 @@ public class Main extends Frame implements MouseListener, MouseMotionListener {
             Vector start = bezierCurve.getPoint(0);
             polyline.moveTo (start.x, start.y);
             tangentLine.moveTo(start.x, start.y);
-            Vector tanVector = bezierCurve.getTangent(0);
+            Vector tanVector = bezierCurve.getCurvature(0);
             tangentLine.lineTo(start.x + tanVector.x, start.y + tanVector.y);
 
             for (double param = 0.01; param <= 1; param+=0.01) {
@@ -79,7 +79,7 @@ public class Main extends Frame implements MouseListener, MouseMotionListener {
             List<Double> uniformPoints = bezierCurve.getUniformParams(10);
             for (double param : uniformPoints) {
                 Vector current = bezierCurve.getPoint(param);
-                tanVector = bezierCurve.getTangent(param);
+                tanVector = bezierCurve.getCurvature(param);
                 tangentLine.moveTo(current.x - tanVector.x, current.y - tanVector.y);
                 tangentLine.lineTo(current.x + tanVector.x, current.y + tanVector.y);
                 drawArrowHead(tanVector, tangentLine);

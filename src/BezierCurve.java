@@ -39,17 +39,34 @@ public class BezierCurve {
 
     public Vector getTangent(double param) {
         int n = points.size() - 1;
-        int nMinFact = factorial(n - 1);
+        int nMin1Fact = factorial(n - 1);
         Vector resultPoint = new Vector();
 
         for (int i = 0; i <= n - 1; i++) {
-            int comb = nMinFact / (factorial(n - 1 - i) * factorial(i));
+            int comb = nMin1Fact / (factorial(n - 1 - i) * factorial(i));
             double toMultSc = comb * (Math.pow(param, i) * Math.pow(1 - param, n - 1 - i));
             Vector pointDiff = points.get(i + 1).copy().sub(points.get(i));
             resultPoint.add(pointDiff.scMult(toMultSc));
         }
 
         return resultPoint.scMult(n).ofSize(TANGENT_SIZE);
+    }
+
+    public Vector getCurvature(double param) {
+        int n = points.size() - 1;
+        int nMin2Fact = factorial(n - 2);
+        Vector resultPoint = new Vector();
+        double toMultSc;
+        Vector pointDiff;
+
+        for (int i = 0; i <= n - 2; i++) {
+            int comb = nMin2Fact / (factorial(n - 2 - i) * factorial(i));
+            toMultSc = comb * (Math.pow(param, i) * Math.pow(1 - param, n - 2 - i));
+            pointDiff = (points.get(i + 2).copy().sub(points.get(i + 1).copy().scMult(2))).add(points.get(i));
+            resultPoint.add(pointDiff.scMult(toMultSc));
+        }
+
+        return resultPoint.scMult(n * (n - 1)).ofSize(TANGENT_SIZE);
     }
 
     public List<Double> getUniformParams(int num) {
