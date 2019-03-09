@@ -1,3 +1,5 @@
+package app;
+
 public class Vector {
     double x;
     double y;
@@ -64,5 +66,21 @@ public class Vector {
         other.z = (other.z / actualSize) * size;
 
         return other;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Vector)
+            return ((Vector) obj).x == this.x && ((Vector) obj).y == this.y;
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Vector{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
     }
 }

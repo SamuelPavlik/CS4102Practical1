@@ -1,9 +1,11 @@
+package app;
+
 import java.util.*;
 
 public class BezierCurve {
-    private static final double TANGENT_SIZE = 20;
-    private static final double STEP_SIZE = 0.001;
-    private static final double EPSILON = STEP_SIZE;
+    private static final double SIZE_MULTIPLIER = 0.03;
+    private static final int PRECISION = 3;
+    private static final double STEP_SIZE = 1.0 / Math.pow(10, PRECISION);
 
     private List<Vector> points;
 
@@ -22,7 +24,15 @@ public class BezierCurve {
         }
     }
 
+    /**
+     * Get point on the curve specified by the parameter
+     * @param param the curve parameter
+     * @return point as app.Vector object
+     */
     public Vector getPoint(double param) {
+        if (points.isEmpty())
+            return null;
+
         int n = points.size() - 1;
         int nFact = factorial(n);
         Vector resultPoint = new Vector();
@@ -37,6 +47,11 @@ public class BezierCurve {
         return resultPoint;
     }
 
+    /**
+     * Get tangent vector for the point on the curve specified by the parameter
+     * @param param he curve parameter
+     * @return tangent vector as app.Vector object
+     */
     public Vector getTangent(double param) {
         int n = points.size() - 1;
         int nMin1Fact = factorial(n - 1);
@@ -49,9 +64,14 @@ public class BezierCurve {
             resultPoint.add(pointDiff.scMult(toMultSc));
         }
 
-        return resultPoint.scMult(n).ofSize(TANGENT_SIZE);
+        return resultPoint.scMult(n*SIZE_MULTIPLIER);
     }
 
+    /**
+     * Get second derivative vector for the point on the curve specified by the parameter
+     * @param param the curve parameter
+     * @return second derivative vector as app.Vector object
+     */
     public Vector getSecondDeriv(double param) {
         int n = points.size() - 1;
         int nMin2Fact = factorial(n - 2);
@@ -66,30 +86,38 @@ public class BezierCurve {
             resultPoint.add(pointDiff.scMult(toMultSc));
         }
 
-        return resultPoint.scMult(n * (n - 1)).ofSize(TANGENT_SIZE);
+        return resultPoint.scMult(n * (n - 1)*SIZE_MULTIPLIER);
     }
 
+    /**
+     * Get curvature vector for the point on the curve specified by the parameter
+     * @param param the curve parameter
+     * @return curvature vector as app.Vector object
+     */
     public Vector getCurvature(double param) {
         Vector tangent = getTangent(param);
-        Vector curvature = getSecondDeriv(param);
-        Vector normal;
-        double angle = Math.atan2((tangent.x * curvature.y) - (tangent.y * curvature.x), (tangent.x * curvature.x) - (tangent.y * curvature.y));
+        Vector secondDeriv = getSecondDeriv(param);
+        Vector curvature;
+        double angle = Math.atan2((tangent.x * secondDeriv.y) - (tangent.y * secondDeriv.x), (tangent.x * secondDeriv.x) - (tangent.y * secondDeriv.y));
         if (angle > 0) {
-            normal = new Vector(-tangent.y, tangent.x);
+            curvature = new Vector(-tangent.y, tangent.x);
         }
         else {
-            normal = new Vector(tangent.y, -tangent.x);
+            curvature = new Vector(tangent.y, -tangent.x);
         }
 
-        return normal;
+        return curvature.ofSize(1).scMult(secondDeriv.size());
     }
 
+    /**
+     * get list of parameters that represent uniformly sampled points on the curve based on the curve length
+     * @param num number of uniformly sampled points on the curve
+     * @return list of parameters that represent uniformly sampled points on the curve based on the curve length
+     */
     public List<Double> getUniformParams(int num) {
         List<Double> uniformParams = new ArrayList<>();
         if (points.size() <= 1 || num <= 0)
             return uniformParams;
-
-//        double fly = points.get(0).copy().sub(points.get(points.size() - 1)).size();
 
         double totalLength = 0;
         Vector oldPoint = getPoint(0);
@@ -100,7 +128,7 @@ public class BezierCurve {
         lengths[0] = 0;
         int index = 1;
 
-        for (double param = STEP_SIZE; param <= 1; param = Main.round(param + STEP_SIZE, 3)) {
+        for (double param = STEP_SIZE; param <= 1; param = MainApp.round(param + STEP_SIZE, 3)) {
             newPoint = getPoint(param);
             double length = newPoint.copy().sub(oldPoint).size();
             totalLength += length;
@@ -130,41 +158,24 @@ public class BezierCurve {
         return lengths.length - 1;
     }
 
-//    private double findParam(double desiredLength, double[] lengths, TreeMap<Double, Double> initParamToLengthMap) {
-//        //1. get lower index
-//        //2. look if either is within epsilon
-//        //1. if not, get centre between these params and check if that is within epsilon
-//        //4. if not, get half in which the length is and repeat from 3.
-//        int higherIndex = findClosestLargerIndex(desiredLength, lengths);
-//        int lowerIndex = higherIndex - 1;
-//
-//        if (lengths[higherIndex] - desiredLength <= EPSILON) {
-//            return initParamToLengthMap.get(lengths[higherIndex]);
-//        }
-//        else if (desiredLength - lengths[lowerIndex] <= EPSILON) {
-//            return initParamToLengthMap.get(lengths[lowerIndex]);
-//        }
-//        else {
-//            double lowerLength = initParamToLengthMap.get(lengths[lowerIndex]);
-//            double middle = (initParamToLengthMap.get(lengths[higherIndex]) - lowerLength) / 2.0;
-//
-//            while (Math.abs(lowerLength + getPoint(middle).sub(getPoint(lowerLength)).size() - desiredLength) > EPSILON) {
-//
-//                lowerLength = initParamToLengthMap.get(lengths[lowerIndex]);
-//                middle = (initParamToLengthMap.get(lengths[higherIndex]) - lowerLength) / 2.0;
-//            }
-//        }
-//
-//    }
-
+    /**
+     * @return list of controlling points
+     */
     public List<Vector> getPoints() {
         return points;
     }
 
+    /**
+     * @param point controlling point
+     */
     public void addPoint(Vector point) {
         points.add(point);
     }
 
+    /**
+     * @param number number to get factorial of
+     * @return factorial of the number
+     */
     private static int factorial(int number) {
         int result = 1;
 
