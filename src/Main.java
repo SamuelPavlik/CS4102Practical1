@@ -7,17 +7,36 @@ import java.awt.geom.*;
 public class Main extends Frame implements MouseListener, MouseMotionListener, ActionListener {
     private static final double ARROW_LENGTH = 10;
     private static final double ARROW_HALF_WIDTH = 5;
+    private static final int SPACING = 30;
     private static final int SAMPLE_NUM_X = 10;
     private static final int SAMPLE_NUM_Y = 50;
     private static final int SAMPLE_NUM_LABEL_WIDTH = 200;
     private static final int DEFAULT_HEIGHT = 20;
+    private static final int SAMPLE_NUM_FIELD_X = SAMPLE_NUM_X + SAMPLE_NUM_LABEL_WIDTH;
     private static final int SAMPLE_NUM_FIELD_WIDTH = 50;
-//    private static final int WIDTH =
+    private static final int TANGENT_LABEL_X = SAMPLE_NUM_FIELD_X + SAMPLE_NUM_FIELD_WIDTH + SPACING;
+    private static final int TANGENT_LABEL_WIDTH = 70;
+    private static final int TANGENT_FIELD_X = TANGENT_LABEL_X + TANGENT_LABEL_WIDTH;
+    private static final int TANGENT_FIELD_WIDTH = 20;
+    private static final int CURV_LABEL_X = TANGENT_FIELD_X + TANGENT_FIELD_WIDTH + SPACING;
+    private static final int CURV_LABEL_WIDTH = 70;
+    private static final int CURV_FIELD_X = CURV_LABEL_X + CURV_LABEL_WIDTH;
+    private static final int APPLY_BUTTON_X = CURV_FIELD_X + TANGENT_FIELD_WIDTH + SPACING;
+    private static final int APPLY_BUTTON_WIDTH = 60;
+    private static final int BUTTON_HEIGHT = 30;
+    private static final int BUTTON_Y = SAMPLE_NUM_Y - 5;
+    private static final int CLEAR_BUTTON_X =  + APPLY_BUTTON_X + APPLY_BUTTON_WIDTH + SPACING;
+    private static final int CLEAR_BUTTON_WIDTH =  60;
 
     private BezierCurve bezierCurve;
     private TextField numOfSamplesField;
+    private Checkbox tangentCheckbox;
+    private Checkbox curvCheckbox;
+    private Button applyButton;
+    private Button clearButton;
     private GeneralPath tangentLine = new GeneralPath();
     private GeneralPath curvLine = new GeneralPath();
+    private int numOfSamples = 0;
 
     private int dragIndex = NOT_DRAGGING;
     private final static int NOT_DRAGGING = -1;
@@ -52,6 +71,45 @@ public class Main extends Frame implements MouseListener, MouseMotionListener, A
         numOfSamplesField.setBounds(SAMPLE_NUM_X + SAMPLE_NUM_LABEL_WIDTH, SAMPLE_NUM_Y, SAMPLE_NUM_FIELD_WIDTH, DEFAULT_HEIGHT);
         numOfSamplesField.addActionListener(this);
         add(numOfSamplesField);
+
+        //setup tangent checkbox
+        Label tangentLabel = new Label("Tangent: ");
+        tangentLabel.setBounds(TANGENT_LABEL_X, SAMPLE_NUM_Y, TANGENT_LABEL_WIDTH, DEFAULT_HEIGHT);
+        add(tangentLabel);
+        tangentCheckbox = new Checkbox();
+        tangentCheckbox.setBounds(TANGENT_FIELD_X, SAMPLE_NUM_Y, TANGENT_FIELD_WIDTH, DEFAULT_HEIGHT);
+        add(tangentCheckbox);
+
+        //setup curvature checkbox
+        Label curvLabel = new Label("Curvature: ");
+        curvLabel.setBounds(CURV_LABEL_X, SAMPLE_NUM_Y, CURV_LABEL_WIDTH, DEFAULT_HEIGHT);
+        add(curvLabel);
+        curvCheckbox = new Checkbox();
+        curvCheckbox.setBounds(CURV_FIELD_X, SAMPLE_NUM_Y, TANGENT_FIELD_WIDTH, DEFAULT_HEIGHT);
+        add(curvCheckbox);
+
+        //setup apply button
+        applyButton = new Button("Apply");
+        applyButton.setBounds(APPLY_BUTTON_X, BUTTON_Y, APPLY_BUTTON_WIDTH, BUTTON_HEIGHT);
+        applyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+        add(applyButton);
+
+        //setup clear button
+        clearButton = new Button("Clear");
+        clearButton.setBounds(CLEAR_BUTTON_X, BUTTON_Y, CLEAR_BUTTON_WIDTH, BUTTON_HEIGHT);
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                bezierCurve = new BezierCurve();
+                repaint();
+            }
+        });
+        add(clearButton);
 
         setLayout(null);
         setSize(1000, 1000);
@@ -106,6 +164,7 @@ public class Main extends Frame implements MouseListener, MouseMotionListener, A
 //            x -= 100;
 //        }
 //        x+=100;
+        initUniformPoints(numOfSamples);
         repaint();
 //        dragIndex = NOT_DRAGGING;
 //        int minDistance = Integer.MAX_VALUE;
@@ -157,15 +216,16 @@ public class Main extends Frame implements MouseListener, MouseMotionListener, A
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        int num = 0;
-        try {
-            num = Integer.parseInt(numOfSamplesField.getText());
-        } catch (NumberFormatException e) {
-            num = 0;
-        }
-        if (num < 0) num = 0;
 
-        initUniformPoints(num);
+        numOfSamples = 0;
+        try {
+            numOfSamples = Integer.parseInt(numOfSamplesField.getText());
+        } catch (NumberFormatException e) {
+            numOfSamples = 0;
+        }
+        if (numOfSamples < 0) numOfSamples = 0;
+
+        initUniformPoints(numOfSamples);
         repaint();
     }
 
