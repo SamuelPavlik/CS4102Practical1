@@ -1,18 +1,24 @@
 //from www.j a va2s .  c  o m
+import java.awt.event.*;
 import java.util.List;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.geom.*;
 
-public class Main extends Frame implements MouseListener, MouseMotionListener {
+public class Main extends Frame implements MouseListener, MouseMotionListener, ActionListener {
     private static final double ARROW_LENGTH = 10;
     private static final double ARROW_HALF_WIDTH = 5;
+    private static final int SAMPLE_NUM_X = 10;
+    private static final int SAMPLE_NUM_Y = 50;
+    private static final int SAMPLE_NUM_LABEL_WIDTH = 200;
+    private static final int DEFAULT_HEIGHT = 20;
+    private static final int SAMPLE_NUM_FIELD_WIDTH = 50;
+//    private static final int WIDTH =
 
     private BezierCurve bezierCurve;
+    private TextField numOfSamplesField;
+    private GeneralPath tangentLine = new GeneralPath();
+    private GeneralPath curvLine = new GeneralPath();
+
     private int dragIndex = NOT_DRAGGING;
     private final static int NOT_DRAGGING = -1;
 
@@ -35,9 +41,20 @@ public class Main extends Frame implements MouseListener, MouseMotionListener {
     }
 
     public Main() {
+        //init bezier curve
         this.bezierCurve = new BezierCurve();
+
+        //setup text field for number of uniform samples
+        Label numOfSamplesLabel = new Label("Number of uniform samples: ");
+        numOfSamplesLabel.setBounds(SAMPLE_NUM_X, SAMPLE_NUM_Y, SAMPLE_NUM_LABEL_WIDTH, DEFAULT_HEIGHT);
+        add(numOfSamplesLabel);
+        numOfSamplesField = new TextField();
+        numOfSamplesField.setBounds(SAMPLE_NUM_X + SAMPLE_NUM_LABEL_WIDTH, SAMPLE_NUM_Y, SAMPLE_NUM_FIELD_WIDTH, DEFAULT_HEIGHT);
+        numOfSamplesField.addActionListener(this);
+        add(numOfSamplesField);
+
+        setLayout(null);
         setSize(1000, 1000);
-//        add(new Checkbox())
         addMouseListener(this);
         addMouseMotionListener(this);
         addWindowListener(new WindowAdapter() {
@@ -52,42 +69,18 @@ public class Main extends Frame implements MouseListener, MouseMotionListener {
         // Set points
         Graphics2D g2 = (Graphics2D) g;
         GeneralPath polyline = new GeneralPath();
-        GeneralPath tangentLine = new GeneralPath();
 
         if (!bezierCurve.getPoints().isEmpty()) {
             Vector start = bezierCurve.getPoint(0);
-            polyline.moveTo (start.x, start.y);
-            tangentLine.moveTo(start.x, start.y);
-            Vector tanVector = bezierCurve.getCurvature(0);
-            tangentLine.lineTo(start.x + tanVector.x, start.y + tanVector.y);
+            Vector end = bezierCurve.getPoint(1);
 
+            polyline.moveTo (start.x, start.y);
             for (double param = 0.01; param <= 1; param+=0.01) {
                 param = round(param, 2);
                 Vector current = bezierCurve.getPoint(param);
                 polyline.lineTo(current.x, current.y);
-
-//                if (((int) (param * 100)) % 10 == 0) {
-////                    tanVector = bezierCurve.getTangent(param);
-////                    tangentLine.moveTo(current.x - tanVector.x, current.y - tanVector.y);
-////                    tangentLine.lineTo(current.x + tanVector.x, current.y + tanVector.y);
-////                    drawArrowHead(tanVector, tangentLine);
-////                    g2.draw(tangentLine);
-//                    g2.draw(new Ellipse2D.Double(current.x, current.y, 10, 10));
-//                }
             }
 
-            List<Double> uniformPoints = bezierCurve.getUniformParams(10);
-            for (double param : uniformPoints) {
-                Vector current = bezierCurve.getPoint(param);
-                tanVector = bezierCurve.getCurvature(param);
-                tangentLine.moveTo(current.x - tanVector.x, current.y - tanVector.y);
-                tangentLine.lineTo(current.x + tanVector.x, current.y + tanVector.y);
-                drawArrowHead(tanVector, tangentLine);
-                g2.draw(tangentLine);
-                g2.draw(new Ellipse2D.Double(current.x, current.y, 10, 10));
-            }
-
-            g2.draw(tangentLine);
             g2.draw(polyline);
 
             // Draw points with their names
@@ -98,10 +91,21 @@ public class Main extends Frame implements MouseListener, MouseMotionListener {
             }
         }
 
+        g2.draw(tangentLine);
+        g2.draw(curvLine);
     }
 
+    int x = 200;
+    int y =200;
     public void mousePressed(MouseEvent e) {
         bezierCurve.addPoint(new Vector(e.getX(), e.getY()));
+//        if (y == 300)
+//            x -= 200;
+//        if (x == 300) {
+//            y += 100;
+//            x -= 100;
+//        }
+//        x+=100;
         repaint();
 //        dragIndex = NOT_DRAGGING;
 //        int minDistance = Integer.MAX_VALUE;
@@ -149,6 +153,46 @@ public class Main extends Frame implements MouseListener, MouseMotionListener {
     }
 
     public void mouseMoved(MouseEvent e) {
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        int num = 0;
+        try {
+            num = Integer.parseInt(numOfSamplesField.getText());
+        } catch (NumberFormatException e) {
+            num = 0;
+        }
+        if (num < 0) num = 0;
+
+        initUniformPoints(num);
+        repaint();
+    }
+
+    private void initUniformPoints(int num) {
+        Vector curvVector;
+        Vector tanVector;
+        List<Double> uniformPoints = bezierCurve.getUniformParams(num);
+        tangentLine = new GeneralPath();
+        curvLine = new GeneralPath();
+
+        for (double param : uniformPoints) {
+            //draw small circles around the sampled points
+//            g2.draw(new Ellipse2D.Double(current.x - 5, current.y - 5, 10, 10));
+
+            //draw tangent vectors
+            Vector current = bezierCurve.getPoint(param);
+            curvVector = bezierCurve.getCurvature(param);
+            curvLine.moveTo(current.x - curvVector.x, current.y - curvVector.y);
+            curvLine.lineTo(current.x + curvVector.x, current.y + curvVector.y);
+            drawArrowHead(curvVector, curvLine);
+
+            //draw curvature vectors
+            tanVector = bezierCurve.getTangent(param);
+            tangentLine.moveTo(current.x - tanVector.x, current.y - tanVector.y);
+            tangentLine.lineTo(current.x + tanVector.x, current.y + tanVector.y);
+            drawArrowHead(tanVector, tangentLine);
+        }
     }
 
     public static double round (double value, int precision) {

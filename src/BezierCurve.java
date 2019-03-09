@@ -52,7 +52,7 @@ public class BezierCurve {
         return resultPoint.scMult(n).ofSize(TANGENT_SIZE);
     }
 
-    public Vector getCurvature(double param) {
+    public Vector getSecondDeriv(double param) {
         int n = points.size() - 1;
         int nMin2Fact = factorial(n - 2);
         Vector resultPoint = new Vector();
@@ -69,12 +69,27 @@ public class BezierCurve {
         return resultPoint.scMult(n * (n - 1)).ofSize(TANGENT_SIZE);
     }
 
+    public Vector getCurvature(double param) {
+        Vector tangent = getTangent(param);
+        Vector curvature = getSecondDeriv(param);
+        Vector normal;
+        double angle = Math.atan2((tangent.x * curvature.y) - (tangent.y * curvature.x), (tangent.x * curvature.x) - (tangent.y * curvature.y));
+        if (angle > 0) {
+            normal = new Vector(-tangent.y, tangent.x);
+        }
+        else {
+            normal = new Vector(tangent.y, -tangent.x);
+        }
+
+        return normal;
+    }
+
     public List<Double> getUniformParams(int num) {
         List<Double> uniformParams = new ArrayList<>();
         if (points.size() <= 1 || num <= 0)
             return uniformParams;
 
-        double fly = points.get(0).copy().sub(points.get(points.size() - 1)).size();
+//        double fly = points.get(0).copy().sub(points.get(points.size() - 1)).size();
 
         double totalLength = 0;
         Vector oldPoint = getPoint(0);
@@ -96,7 +111,7 @@ public class BezierCurve {
         }
 
         double unit = totalLength / num;
-        for (int i = 0; i < num; i++) {
+        for (int i = 0; i <= num; i++) {
             double pointLength = i * unit;
             double pointParam = initLengthToParamMap.get(lengths[findClosestLargerIndex(pointLength, lengths)]);
             uniformParams.add(pointParam);
