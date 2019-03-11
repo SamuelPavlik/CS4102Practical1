@@ -98,7 +98,7 @@ public class BezierCurve {
         Vector tangent = getTangent(param);
         Vector secondDeriv = getSecondDeriv(param);
         Vector curvature;
-        double angle = Math.atan2((tangent.x * secondDeriv.y) - (tangent.y * secondDeriv.x), (tangent.x * secondDeriv.x) - (tangent.y * secondDeriv.y));
+        double angle = Math.atan2((tangent.x * secondDeriv.y) - (tangent.y * secondDeriv.x), (tangent.x * secondDeriv.x) + (tangent.y * secondDeriv.y));
         if (angle > 0) {
             curvature = new Vector(-tangent.y, tangent.x);
         }
@@ -131,6 +131,7 @@ public class BezierCurve {
         lengths[0] = 0;
         int index = 1;
 
+        // obtain total length of the curve
         for (double param = STEP_SIZE; param <= 1; param = CurveDraw.round(param + STEP_SIZE, 3)) {
             newPoint = getPoint(param);
             double length = newPoint.copy().sub(oldPoint).size();
@@ -144,7 +145,7 @@ public class BezierCurve {
         double unit = totalLength / (num - 1);
         for (int i = 0; i < num; i++) {
             double pointLength = i * unit;
-            double pointParam = initLengthToParamMap.get(lengths[findClosestLargerIndex(pointLength, lengths)]);
+            double pointParam = initLengthToParamMap.get(lengths[findClosestLargerIndex(pointLength, lengths, 0, lengths.length - 1)]);
             uniformParams.add(pointParam);
         }
 
@@ -166,6 +167,24 @@ public class BezierCurve {
 
         return lengths.length - 1;
     }
+
+    /**
+     * pass array of arc lengths of points on the curve from the start and find the index of closest larger length
+     * @param desiredLength desired length
+     * @param lengths array of all lengths
+     * @return index of closest larger length
+     */
+    private int findClosestLargerIndex(double desiredLength, double[] lengths, int start, int end) {
+        if (end - start <= 1)
+            return end;
+        else if (lengths[(start + end) / 2] < desiredLength)
+            return findClosestLargerIndex(desiredLength, lengths, (start + end) / 2, end);
+        else if (lengths[(start + end) / 2] > desiredLength)
+            return findClosestLargerIndex(desiredLength, lengths, start, (start + end) / 2);
+        else
+            return (start + end) / 2;
+    }
+
 
     /**
      * @return list of controlling points
