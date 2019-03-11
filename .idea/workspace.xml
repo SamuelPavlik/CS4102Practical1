@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90cd6bce-f7f5-4a33-9206-4cea54074df1" name="Default Changelist" comment="">
+    <list default="true" id="90cd6bce-f7f5-4a33-9206-4cea54074df1" name="Default Changelist" comment="modular split, explained in report">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CS4102Practical1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/CS4102Practical1.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/BezierCurve.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/BezierCurve.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Vector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Vector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/testing/BezierCurveTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/BezierCurveTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CS4102Practical1.odt" beforeDir="false" afterPath="$PROJECT_DIR$/CS4102Practical1.odt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/testing/BezierCurveTest.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/BezierCurve.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="266" column="25" lean-forward="true" selection-start-line="266" selection-start-column="25" selection-end-line="266" selection-end-column="25" />
+            <state relative-caret-position="261">
+              <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
             </state>
           </provider>
         </entry>
@@ -29,17 +28,30 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/MainApp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="251" lean-forward="true" selection-start-line="251" selection-end-line="251" />
+            <state relative-caret-position="786">
+              <caret line="104" column="7" lean-forward="true" selection-start-line="104" selection-start-column="7" selection-end-line="104" selection-end-column="7" />
+              <folding>
+                <element signature="e#5452#5584#0" expanded="true" />
+                <element signature="e#5583#5584#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/app/BezierCurve.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/app/CurveDraw.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="119" column="24" selection-start-line="119" selection-start-column="24" selection-end-line="119" selection-end-column="24" />
+            <state relative-caret-position="240">
+              <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#4382#4383#0" expanded="true" />
+                <element signature="e#4416#4417#0" expanded="true" />
+                <element signature="e#4475#4476#0" expanded="true" />
+                <element signature="e#4521#4522#0" expanded="true" />
+                <element signature="e#4561#4562#0" expanded="true" />
+                <element signature="e#4589#4590#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -47,12 +59,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/Vector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="64" column="18" selection-start-line="64" selection-start-column="18" selection-end-line="64" selection-end-column="18" />
-              <folding>
-                <element signature="e#895#896#0" expanded="true" />
-                <element signature="e#972#973#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="676">
+              <caret line="111" column="30" lean-forward="true" selection-start-line="111" selection-start-column="30" selection-end-line="111" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -80,6 +88,7 @@
       <find>getSecondDeriv</find>
       <find>getUniformPoints</find>
       <find>second derivative vector</find>
+      <find>g2</find>
     </findStrings>
     <replaceStrings>
       <replace>tanVector</replace>
@@ -108,25 +117,25 @@
         <option value="$PROJECT_DIR$/src/Hello.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/app/Vector.java" />
-        <option value="$PROJECT_DIR$/src/app/BezierCurve.java" />
-        <option value="$PROJECT_DIR$/src/app/MainApp.java" />
         <option value="$PROJECT_DIR$/src/testing/BezierCurveTest.java" />
+        <option value="$PROJECT_DIR$/src/app/CurveDraw.java" />
+        <option value="$PROJECT_DIR$/src/app/MainApp.java" />
+        <option value="$PROJECT_DIR$/src/app/BezierCurve.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="415" />
-    <option name="y" value="45" />
-    <option name="width" value="1400" />
-    <option name="height" value="1000" />
+    <option name="x" value="2057" />
+    <option name="y" value="43" />
+    <option name="width" value="1390" />
+    <option name="height" value="1007" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -145,16 +154,12 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="CS4102Practical1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CS4102Practical1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="testing" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -162,7 +167,7 @@
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552305867136" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552327099888" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunDashboard">
@@ -177,7 +182,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.BezierCurveTest.getUniformParamsTestCurve2">
+  <component name="RunManager" selected="Application.MainApp">
     <configuration name="MainApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="app.MainApp" />
       <module name="CS4102Practical1" />
@@ -257,8 +262,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.BezierCurveTest.getUniformParamsTestCurve2" />
         <item itemvalue="Application.MainApp" />
+        <item itemvalue="JUnit.BezierCurveTest.getUniformParamsTestCurve2" />
         <item itemvalue="JUnit.BezierCurveTest.getUniformParamsTestOnePointCurve" />
         <item itemvalue="JUnit.BezierCurveTest.getUniformParamsEmptyCurve" />
         <item itemvalue="JUnit.BezierCurveTest.getSecondDerivTestCurve4" />
@@ -311,7 +316,14 @@
       <option name="project" value="LOCAL" />
       <updated>1552138822456</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="modular split, explained in report">
+      <created>1552326469248</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1552326469248</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -347,10 +359,10 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
+    <frame x="1920" y="0" width="1920" height="1080" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2642344" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26627535" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -359,8 +371,8 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3291536" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39916405" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32873806" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39872748" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -377,6 +389,34 @@
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
     </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26307365" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3295583" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3997735" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.3295583" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.3295583" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Maven" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+    </layout-to-restore>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="working tangent with arrows" />
@@ -384,7 +424,8 @@
     <MESSAGE value="uniform points done with tangents" />
     <MESSAGE value="curvature started" />
     <MESSAGE value="buttons added without functionality" />
-    <option name="LAST_COMMIT_MESSAGE" value="buttons added without functionality" />
+    <MESSAGE value="modular split, explained in report" />
+    <option name="LAST_COMMIT_MESSAGE" value="modular split, explained in report" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -407,6 +448,18 @@
           <properties />
           <option name="timeStamp" value="18" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/app/MainApp.java</url>
+          <line>121</line>
+          <properties />
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/app/CurveDraw.java</url>
+          <line>80</line>
+          <properties />
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
@@ -414,86 +467,71 @@
     <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk/jre/lib/rt.jar!/java/awt/Polygon.class" />
     <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk/jre/lib/rt.jar!/java/awt/TextArea.class" />
     <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk/jre/lib/rt.jar!/java/awt/Checkbox.class" />
-    <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk/jre/lib/rt.jar!/java/awt/Component.class" />
-    <entry file="file://$PROJECT_DIR$/src/TestForm.form">
-      <provider selected="true" editor-type-id="ui-designer" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/TestForm.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TestForm.form" />
+    <entry file="file://$PROJECT_DIR$/src/TestForm.java" />
     <entry file="file://$PROJECT_DIR$/src/LengthToParam.java" />
     <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk/jre/lib/rt.jar!/java/lang/Integer.class" />
-    <entry file="file://$PROJECT_DIR$/src/BezierCurve.java">
+    <entry file="file://$PROJECT_DIR$/src/BezierCurve.java" />
+    <entry file="file://$PROJECT_DIR$/src/SimpleExample.java" />
+    <entry file="file://$PROJECT_DIR$/src/Vector.java" />
+    <entry file="file://$PROJECT_DIR$/src/Hello.java" />
+    <entry file="file://$PROJECT_DIR$/src/Main.java" />
+    <entry file="file://$PROJECT_DIR$/src/testing/BezierCurveTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1098">
-          <caret line="65" selection-start-line="65" selection-end-line="65" />
+        <state relative-caret-position="339">
+          <caret line="266" column="25" lean-forward="true" selection-start-line="266" selection-start-column="25" selection-end-line="266" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SimpleExample.java">
+    <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk/jre/lib/rt.jar!/java/awt/Component.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="55" selection-start-line="55" selection-end-line="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Vector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" column="3" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Hello.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="15" column="1" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
+        <state relative-caret-position="395">
+          <caret line="1394" column="16" selection-start-line="1394" selection-start-column="16" selection-end-line="1394" selection-end-column="16" />
           <folding>
-            <element signature="e#355#356#0" expanded="true" />
-            <element signature="e#382#383#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="225" column="46" selection-start-line="225" selection-start-column="46" selection-end-line="225" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/Vector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="64" column="18" selection-start-line="64" selection-start-column="18" selection-end-line="64" selection-end-column="18" />
-          <folding>
-            <element signature="e#895#896#0" expanded="true" />
-            <element signature="e#972#973#0" expanded="true" />
+            <element signature="e#43076#43077#0" expanded="true" />
+            <element signature="e#43139#43140#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/BezierCurve.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="119" column="24" selection-start-line="119" selection-start-column="24" selection-end-line="119" selection-end-column="24" />
+        <state relative-caret-position="261">
+          <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/MainApp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="251" lean-forward="true" selection-start-line="251" selection-end-line="251" />
+        <state relative-caret-position="786">
+          <caret line="104" column="7" lean-forward="true" selection-start-line="104" selection-start-column="7" selection-end-line="104" selection-end-column="7" />
+          <folding>
+            <element signature="e#5452#5584#0" expanded="true" />
+            <element signature="e#5583#5584#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/testing/BezierCurveTest.java">
+    <entry file="file://$PROJECT_DIR$/src/app/Vector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="266" column="25" lean-forward="true" selection-start-line="266" selection-start-column="25" selection-end-line="266" selection-end-column="25" />
+        <state relative-caret-position="676">
+          <caret line="111" column="30" lean-forward="true" selection-start-line="111" selection-start-column="30" selection-end-line="111" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/CurveDraw.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4382#4383#0" expanded="true" />
+            <element signature="e#4416#4417#0" expanded="true" />
+            <element signature="e#4475#4476#0" expanded="true" />
+            <element signature="e#4521#4522#0" expanded="true" />
+            <element signature="e#4561#4562#0" expanded="true" />
+            <element signature="e#4589#4590#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
