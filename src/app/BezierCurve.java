@@ -131,7 +131,7 @@ public class BezierCurve {
         lengths[0] = 0;
         int index = 1;
 
-        for (double param = STEP_SIZE; param <= 1; param = MainApp.round(param + STEP_SIZE, 3)) {
+        for (double param = STEP_SIZE; param <= 1; param = CurveDraw.round(param + STEP_SIZE, 3)) {
             newPoint = getPoint(param);
             double length = newPoint.copy().sub(oldPoint).size();
             totalLength += length;
@@ -151,6 +151,12 @@ public class BezierCurve {
         return uniformParams;
     }
 
+    /**
+     * pass array of arc lengths of points on the curve from the start and find the index of closest larger length
+     * @param desiredLength desired length
+     * @param lengths array of all lengths
+     * @return index of closest larger length
+     */
     private int findClosestLargerIndex(double desiredLength, double[] lengths) {
         for (int i = 0; i < lengths.length; i++) {
             if (lengths[i] >= desiredLength) {
