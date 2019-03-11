@@ -9,14 +9,6 @@ import static org.junit.Assert.*;
 
 public class BezierCurveTest {
 
-    @org.junit.Before
-    public void setUp() throws Exception {
-    }
-
-    @org.junit.After
-    public void tearDown() throws Exception {
-    }
-
     /**
      * test bezier curve with no controlling points
      */
@@ -269,38 +261,84 @@ public class BezierCurveTest {
     }
 
     /**
-     * get specified number of sampling points for rounded curve with 3 controlling points for parameter 0, 0.5 and 1
+     * get specified number of sampling points for rounding curve with 3 controlling points
      */
     @org.junit.Test
     public void getUniformParamsTestCurve3() {
-//        BezierCurve curve = new BezierCurve(new Vector(10, 20), new Vector(15, 20), new Vector(15, 30));
-//        assertTrue(curve.getUniformParams(0).dot(new Vector(-1, 0)) > 0);
-//        assertTrue(curve.getUniformParams(0).dot(new Vector(0, 1)) > 0);
-//        assertTrue(curve.getUniformParams(0.5).dot(new Vector(-1, 0)) > 0);
-//        assertTrue(curve.getUniformParams(0.5).dot(new Vector(0, 1)) > 0);
-//        assertTrue(curve.getUniformParams(1).dot(new Vector(-1, 0)) > 0);
-//        assertTrue(curve.getUniformParams(1).dot(new Vector(0, 1)) > 0);
+        BezierCurve curve = new BezierCurve(new Vector(10, 20), new Vector(15, 20), new Vector(15, 30));
+        List<Double> params = curve.getUniformParams(6);
+        assertEquals(6, curve.getUniformParams(6).size());
+
+        // check that each point is further down the line of the curve
+        // each x and y should be larger than the previous
+        Vector prev = curve.getPoint(params.get(0));
+        for (int i = 1; i < params.size(); i++) {
+            Vector point = curve.getPoint(params.get(i));
+            assertTrue(point.x > prev.x);
+            assertTrue(point.y > prev.y);
+        }
+
+        // check that the first and the last sampling points are equal to starting and ending controlling points
+        assertEquals(new Vector(10, 20), curve.getPoint(params.get(0)));
+        assertEquals(new Vector(15, 30), curve.getPoint(params.get(params.size() - 1)));
     }
 
     /**
-     * get specified number of sampling points for bezier curve with 4 controlling points for parameter 0, 0.5 and 1
+     * get specified number of sampling points for bezier curve with 4 controlling points
      */
     @org.junit.Test
     public void getUniformParamsTestCurve4() {
-//        BezierCurve curve = new BezierCurve(new Vector(10, 20), new Vector(20, 20),
-//                new Vector(10, 30), new Vector(20, 30));
-//        assertTrue(curve.getUniformParams(0).dot(new Vector(-1, 0)) > 0);
-//        assertTrue(curve.getUniformParams(0).dot(new Vector(0, 1)) > 0);
-//        assertEquals(new Vector(), curve.getUniformParams(0.5));
-//        assertTrue(curve.getUniformParams(1).dot(new Vector(1, 0)) > 0);
-//        assertTrue(curve.getUniformParams(1).dot(new Vector(0, -1)) > 0);
+        BezierCurve curve = new BezierCurve(new Vector(10, 20), new Vector(15, 20),
+                                            new Vector(10, 30), new Vector(15, 30));
+        List<Double> params = curve.getUniformParams(6);
+        assertEquals(6, curve.getUniformParams(6).size());
+
+        // check that each point is further down the line of the curve
+        // each x and y should be larger than the previous
+        Vector prev = curve.getPoint(params.get(0));
+        for (int i = 1; i < params.size(); i++) {
+            Vector point = curve.getPoint(params.get(i));
+            assertTrue(point.x > prev.x);
+            assertTrue(point.y > prev.y);
+        }
+
+        // check that the first and the last sampling points are equal to starting and ending controlling points
+        assertEquals(new Vector(10, 20), curve.getPoint(params.get(0)));
+        assertEquals(new Vector(15, 30), curve.getPoint(params.get(params.size() - 1)));    }
+
+    @org.junit.Test
+    public void getPointsTestEmpty() {
+        BezierCurve bezierCurve = new BezierCurve();
+        assertEquals(0, bezierCurve.getPoints().size());
     }
 
     @org.junit.Test
-    public void getPoints() {
+    public void getPointsTest1() {
+        BezierCurve bezierCurve = new BezierCurve(new Vector());
+        assertEquals(1, bezierCurve.getPoints().size());
     }
 
     @org.junit.Test
-    public void addPoint() {
+    public void getPointsTestMany() {
+        BezierCurve bezierCurve = new BezierCurve(new Vector(), new Vector(), new Vector());
+        assertEquals(3, bezierCurve.getPoints().size());
+    }
+
+    @org.junit.Test
+    public void addPointTest1() {
+        BezierCurve bezierCurve = new BezierCurve(new Vector());
+        assertEquals(1, bezierCurve.getPoints().size());
+        bezierCurve.addPoint(new Vector());
+        assertEquals(2, bezierCurve.getPoints().size());
+    }
+
+    @org.junit.Test
+    public void addPointTestMany() {
+        BezierCurve bezierCurve = new BezierCurve(new Vector());
+        assertEquals(1, bezierCurve.getPoints().size());
+        bezierCurve.addPoint(new Vector());
+        bezierCurve.addPoint(new Vector());
+        bezierCurve.addPoint(new Vector());
+        assertEquals(4, bezierCurve.getPoints().size());
     }
 }
