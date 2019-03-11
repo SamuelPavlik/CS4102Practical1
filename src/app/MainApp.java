@@ -7,18 +7,21 @@ public class MainApp extends Frame implements MouseListener, MouseMotionListener
     private static final int SPACING = 30;
     private static final int SAMPLE_NUM_X = 10;
     private static final int SAMPLE_NUM_Y = 50;
-    private static final int SAMPLE_NUM_LABEL_WIDTH = 200;
+    private static final int SAMPLE_NUM_LABEL_WIDTH = 185;
     private static final int DEFAULT_HEIGHT = 20;
     private static final int SAMPLE_NUM_FIELD_X = SAMPLE_NUM_X + SAMPLE_NUM_LABEL_WIDTH;
     private static final int SAMPLE_NUM_FIELD_WIDTH = 50;
     private static final int TANGENT_LABEL_X = SAMPLE_NUM_FIELD_X + SAMPLE_NUM_FIELD_WIDTH + SPACING;
-    private static final int TANGENT_LABEL_WIDTH = 70;
+    private static final int TANGENT_LABEL_WIDTH = 60;
     private static final int TANGENT_FIELD_X = TANGENT_LABEL_X + TANGENT_LABEL_WIDTH;
     private static final int TANGENT_FIELD_WIDTH = 20;
     private static final int CURV_LABEL_X = TANGENT_FIELD_X + TANGENT_FIELD_WIDTH + SPACING;
     private static final int CURV_LABEL_WIDTH = 70;
     private static final int CURV_FIELD_X = CURV_LABEL_X + CURV_LABEL_WIDTH;
-    private static final int APPLY_BUTTON_X = CURV_FIELD_X + TANGENT_FIELD_WIDTH + SPACING;
+    private static final int DERIV_LABEL_X = CURV_FIELD_X + TANGENT_FIELD_WIDTH + SPACING;
+    private static final int DERIV_LABEL_WIDTH = 120;
+    private static final int DERIV_FIELD_X = DERIV_LABEL_X + DERIV_LABEL_WIDTH;
+    private static final int APPLY_BUTTON_X = DERIV_FIELD_X + TANGENT_FIELD_WIDTH + SPACING;
     private static final int APPLY_BUTTON_WIDTH = 60;
     private static final int BUTTON_HEIGHT = 30;
     private static final int BUTTON_Y = SAMPLE_NUM_Y - 5;
@@ -29,9 +32,7 @@ public class MainApp extends Frame implements MouseListener, MouseMotionListener
     private TextField numOfSamplesField;
     private Checkbox tangentCheckbox;
     private Checkbox curvCheckbox;
-
-    private int dragIndex = NOT_DRAGGING;
-    private final static int NOT_DRAGGING = -1;
+    private Checkbox secondDerivCheckbox;
 
     public static void main(String[] args) {
         (new MainApp()).setVisible(true);
@@ -66,6 +67,14 @@ public class MainApp extends Frame implements MouseListener, MouseMotionListener
         curvCheckbox = new Checkbox();
         curvCheckbox.setBounds(CURV_FIELD_X, SAMPLE_NUM_Y, TANGENT_FIELD_WIDTH, DEFAULT_HEIGHT);
         add(curvCheckbox);
+
+        //setup second derivative checkbox
+        Label secondDeriv = new Label("Second derivative: ");
+        secondDeriv.setBounds(DERIV_LABEL_X, SAMPLE_NUM_Y, DERIV_LABEL_WIDTH, DEFAULT_HEIGHT);
+        add(secondDeriv);
+        secondDerivCheckbox = new Checkbox();
+        secondDerivCheckbox.setBounds(DERIV_FIELD_X, SAMPLE_NUM_Y, TANGENT_FIELD_WIDTH, DEFAULT_HEIGHT);
+        add(secondDerivCheckbox);
 
         //setup apply button
         Button applyButton = new Button("Apply");
@@ -110,53 +119,34 @@ public class MainApp extends Frame implements MouseListener, MouseMotionListener
         // Set points
         curveDraw.setG2((Graphics2D) g);
         curveDraw.drawCurve();
-        curveDraw.initUniformPoints(numOfSamplesField.getText(), tangentCheckbox.getState(), curvCheckbox.getState());
+        curveDraw.initUniformPoints(numOfSamplesField.getText(),
+                                    tangentCheckbox.getState(),
+                                    curvCheckbox.getState(),
+                                    secondDerivCheckbox.getState());
+
+    }
+
+    public void mousePressed(MouseEvent e) {
+        curveDraw.onMousePressed(e);
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        curveDraw.onMouseReleased(e);
+        repaint();
+    }
+
+    public void mouseDragged(MouseEvent e) {
+        curveDraw.onMouseDragged(e);
+        repaint();
     }
 
     /**
      * Add controlling point to the Bezier curve
      * @param e
      */
-    public void mousePressed(MouseEvent e) {
+    public void mouseClicked(MouseEvent e) {
         curveDraw.getCurve().addPoint(new Vector(e.getX(), e.getY()));
         repaint();
-//        dragIndex = NOT_DRAGGING;
-//        int minDistance = Integer.MAX_VALUE;
-//        int indexOfClosestPoint = -1;
-//        for (int i = 0; i < 4; i++) {
-//            int deltaX = xs[i] - e.getX();
-//            int deltaY = ys[i] - e.getY();
-//            int distance = (int) (Math.sqrt(deltaX * deltaX + deltaY * deltaY));
-//            if (distance < minDistance) {
-//                minDistance = distance;
-//                indexOfClosestPoint = i;
-//            }
-//        }
-//        if (minDistance > NEIGHBORHOOD)
-//            return;
-//
-//        dragIndex = indexOfClosestPoint;
-    }
-
-    public void mouseReleased(MouseEvent e) {
-//        if (dragIndex == NOT_DRAGGING)
-//            return;
-//        xs[dragIndex] = e.getX();
-//        ys[dragIndex] = e.getY();
-//        dragIndex = NOT_DRAGGING;
-//        repaint();
-    }
-
-    public void mouseDragged(MouseEvent e) {
-//        if (dragIndex == NOT_DRAGGING)
-//            return;
-//
-//        xs[dragIndex] = e.getX();
-//        ys[dragIndex] = e.getY();
-//        repaint();
-    }
-
-    public void mouseClicked(MouseEvent e) {
     }
 
     public void mouseEntered(MouseEvent e) {
