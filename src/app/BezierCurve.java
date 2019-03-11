@@ -106,6 +106,9 @@ public class BezierCurve {
             curvature = new Vector(tangent.y, -tangent.x);
         }
 
+        double secondDerivSize = secondDeriv.size();
+        if (secondDerivSize == 0)
+            return new Vector();
         return curvature.ofSize(1).scMult(secondDeriv.size());
     }
 
@@ -138,8 +141,8 @@ public class BezierCurve {
             oldPoint = newPoint;
         }
 
-        double unit = totalLength / num;
-        for (int i = 0; i <= num; i++) {
+        double unit = totalLength / (num - 1);
+        for (int i = 0; i < num; i++) {
             double pointLength = i * unit;
             double pointParam = initLengthToParamMap.get(lengths[findClosestLargerIndex(pointLength, lengths)]);
             uniformParams.add(pointParam);

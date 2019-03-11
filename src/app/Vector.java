@@ -1,9 +1,9 @@
 package app;
 
 public class Vector {
-    double x;
-    double y;
-    double z;
+    public double x;
+    public double y;
+    public double z;
 
     public Vector(double x, double y, double z) {
         this.x = x;
@@ -46,6 +46,10 @@ public class Vector {
         this.z -= other.z;
 
         return this;
+    }
+
+    public double dot(Vector other) {
+        return this.x * other.x + this.y * other.y + this.z * other.z;
     }
 
     public Vector copy() {
