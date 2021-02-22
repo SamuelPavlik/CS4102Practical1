@@ -22,6 +22,7 @@ The application logic is split into 3 classes:
 - `MainApp`
 - `CurveDraw`
 - `BezierCurve`
+
 The `MainApp` class deals with the GUI layout and accepting the user input. This includes pressing the 
 buttons, checking the check boxes and the text field for number of sample points. `BezierCurve` implements 
 the logic behind the Bezier Curves, that is storing the controlling points, getting points, tangent 
@@ -34,8 +35,8 @@ Additionally, a class called `Vector` to store and perform basic mathematical op
 implemented.
 
 #### Bezier Curve
-Each point on a Bezier curve can be parametrically obtained by this formula:
-
+Each point on a Bezier curve can be parametrically obtained by this formula:  
+![formula1](imgs/f1.PNG)  
 where u represents the parameter, n is the number of controlling points and pi is an ith controlling 
 point vector. All the points on a Bezier curve can be defined by the parameter u that is between 0 and 1. 
 By this formula p(0) returns the first controllig point and p(1) returns the last controlling point. 
@@ -55,34 +56,37 @@ those distances mapped as values. Once we’ve calculated the overall length, we
 of uniform points we want to display and calculate distances for each from the start. Now, using the binary 
 search, we’ll look through the HashMap distances, find the closest larger distance to each sample point 
 that we have stored and assign its parameter to the sample point. Given a desired number of sample points 
-and a number of all points in the HashMap, the overall complexity of finding the sample points is:
-
+and a number of all points in the HashMap, the overall complexity of finding the sample points is:  
+![formula2](imgs/f2.PNG)  
 It should also be said, that the curve is sampled such, that the first and the last sample points are at 
-the start and the end of the curve respectively.
-
+the start and the end of the curve respectively.  
+![img1](imgs/img1.PNG)  
+![img2](imgs/img2.PNG)
 
 To acquire the tangent vector of a sample point specified by a parameter, we need to get the first 
-derivative of the Bezier curve formula with respect to the parameter:
-
-where bi,n-1(t) is a set of polynomials called Bernstein basis polynomials that are equal to:
-
+derivative of the Bezier curve formula with respect to the parameter:  
+![formula3](imgs/f3.PNG)  
+where bi,n-1(t) is a set of polynomials called Bernstein basis polynomials that are equal to:  
+![formula4](imgs/f4.PNG)  
 The whole formula is implemented in the method called getTangent() that takes the parameter t as argument 
 and produces the first derivative which is the tangent vector for a sample point on the curve specified 
 by the parameter.
-
+![img3](imgs/img3.PNG)
+![img4](imgs/img4.PNG)
 
 The second derivative, which is the curvature vector, is normally perpendicular to the tangent vector, 
 however, since all the points on Bezier curve are not sampled uniformly this doesn’t hold here, and we 
 need to implement a different method of getting the curvature vector. To proof this, a Bezier curve of 
 quadratic and cubic degree is provided with curvature vector at sample points.
-
+![img5](imgs/img5.PNG)
+![img6](imgs/img6.PNG)
 
 The images prove that the second derivatives of the quadratic curve do not even depend on the parameter 
-and are constant. To understand this, we need to look at the formula for the second derivative:
-
+and are constant. To understand this, we need to look at the formula for the second derivative:  
+![formula5](imgs/f5.PNG)  
 where Bn-2,i are the Bernstein basis polynomials. When we assign 3 to n, we get the formula for the 
-quadratic Bezier curve:
-
+quadratic Bezier curve:  
+![formula6](imgs/f6.PNG)  
 We can see that the parameter does not even appear in the formula, because the second derivation gets rid 
 of it. The curvature vector in the quadratic Bezier curve therefore purely depends on the position of the 
 controlling points.  
@@ -101,8 +105,8 @@ acquire the first and the second derivative vectors and then finds the curvature
 
 The lengths of tangent and curvature vectors are equal to the length of the first and the second 
 derivatives scaled by a constant factor called `SIZE_MULTIPLIER` to fit into the screen.
-
-
+![img7](imgs/img7.PNG)  
+![img8](imgs/img8.PNG)  
 
 ### Advanced Specification
 The whole logic of the point dragging is implemented inside the `CurveDraw` class. To allow for this 
